@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSS Canary Dashboard</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #f0f0f0, #e4e4e4);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 42px;
+            color: #34495e;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .card-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .report-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border-left: 5px solid #2c3e50;
+        }
+
+        .report-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .alert-message {
+            font-size: 16px;
+            color: #2c3e50;
+            font-weight: bold;
+            padding: 15px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            font-size: 20px;
+            color: #34495e;
+            margin-top: 25px;
+            font-weight: 500;
+        }
+
+        pre {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #2c3e50;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-x: auto;
+        }
+
+        .timestamp {
+            text-align: right;
+            font-size: 14px;
+            color: #888;
+            margin-top: 20px;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 16px;
+            color: #7f8c8d;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            font-size: 22px;
+            display: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .scroll-to-top:hover {
+            background-color: #1a252f;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .report-card a {
+            color: #2c3e50;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .report-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* Style for expandable DOM section */
+        .dom-content {
+            max-height: 200px;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .dom-content.expanded {
+            max-height: 1000px; /* A large value to allow full expansion */
+        }
+
+        /* Centering the toggle button */
+        .toggle-button {
+            display: block;
+            width: 100%;
+            text-align: center;
+            cursor: pointer;
+            color: #2980b9;
+            font-weight: bold;
+            text-decoration: underline;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>XSS Canary Dashboard</h1>
+
+        <div class="card-container">
+            {% for entry in data %}
+                <div class="report-card">
+                    <div class="alert-message">
+                        <strong>Alert Message:</strong> {{ entry.alert_msg }}
+                    </div>
+
+                    <h3>Stack Trace:</h3>
+                    <pre>{{ entry.stack }}</pre>
+
+                    <h3>DOM:</h3>
+                    <div class="dom-content" id="dom-{{ loop.index }}">
+                        <pre>{{ entry.dom }}</pre>
+                    </div>
+                    <span class="toggle-button" onclick="toggleDOM('{{ loop.index }}')">Expand</span>
+
+                    <h3>URL:</h3>
+                    <pre>{{ entry.url }}</pre>
+
+                    <div class="timestamp">
+                        <strong>Timestamp:</strong> {{ entry.timestamp }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="scroll-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
+        ↑
+    </div>
+
+    <script>
+        function toggleDOM(index) {
+            const domContent = document.getElementById('dom-' + index);
+            domContent.classList.toggle('expanded');
+        }
+
+        window.onscroll = function() {
+            var button = document.querySelector('.scroll-to-top');
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                button.style.display = "block";
+            } else {
+                button.style.display = "none";
+            }
+        };
+    </script>
+</body>
+</html>
