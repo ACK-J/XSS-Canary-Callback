@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/735c457f-0fcf-4d27-abfb-14bcbc03c955" alt="canary" width="250" />
+</p>
+
 # XSS Canary Callback
 
 A lightweight Flask application designed to receive and log XSS Canary alerts, then display them on a secure, real‑time dashboard.
