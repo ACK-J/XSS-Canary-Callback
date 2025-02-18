@@ -4,7 +4,7 @@
 
 # XSS Canary Callback
 
-A lightweight Flask application designed to receive and log XSS Canary alerts, then display them on a secure, real‑time dashboard.
+A lightweight Flask application designed to receive and log XSS Canary alerts, then display them on a secure, real‑time dashboard. This repo is compatible with the canary code found at https://xsscanary.com
 
 ## Overview
 
