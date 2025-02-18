@@ -78,4 +78,4 @@ gunicorn --bind 0.0.0.0:443 \\
 
 ## Logging
 
-Each valid XSS alert POSTed to `/xss` is logged in `xss_canary.json` as a JSON object on a new line, making it easy to parse or process later.
+Each valid XSS alert POSTed to `/xss` is logged in `xss_canary.json` as a JSON object on a new line.
