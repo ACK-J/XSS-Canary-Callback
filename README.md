@@ -4,7 +4,9 @@
 
 # XSS Canary Callback WebServer
 
-A lightweight Flask application designed to receive and log XSS Canary alerts, then display them on a secure, real‑time dashboard. This repo is compatible with the canary code found at https://xsscanary.com
+A lightweight Flask application designed to log and display XSS Canary alerts in a real‑time dashboard. This repo is compatible with the canary code found at https://xsscanary.com.
+
+Please reference the [Black Hills Information Security blog post](https://www.blackhillsinfosec.com/alerting-on-xss-exploits/) to learn more.
 
 ## Overview
 
