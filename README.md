@@ -74,7 +74,7 @@ You can use [gunicorn](https://gunicorn.org/) to run the application in producti
 gunicorn --bind 0.0.0.0:443 \\
   --certfile=/etc/letsencrypt/live/${CALLBACK_DOMAIN}/fullchain.pem \\
   --keyfile=/etc/letsencrypt/live/${CALLBACK_DOMAIN}/privkey.pem \\
-  --workers 4 \\
+  --workers 4 --daemon\\
   app:app
 ```
 
