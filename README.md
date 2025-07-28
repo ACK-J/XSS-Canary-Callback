@@ -32,6 +32,11 @@ This project provides a simple backend to collect potential cross‑site scripti
   - **Endpoint:** `GET /dashboard`  
   - Protected via HTTP Basic Authentication (username: `admin`).  
   - Displays a styled view of all logged alerts, with support for expandable DOM sections.
+- **Hosted Canary Scripts**
+    - **Endpoint:** `GET /canary.js?domain=example.com`
+    - **Endpoint:** `GET /canary_no_dom.js?domain=example.com`
+    - Static canary scripts used to identify XSS within your webserver and report exploits to the XSS Canary webserver.
+    - To prevent the user's DOM from getting sent use the `/canary_no_dom.js` file
 
 ## Requirements
 
@@ -42,9 +47,9 @@ This project provides a simple backend to collect potential cross‑site scripti
   - gunicorn (for production deployment)
 
 ## Installation
-To easily install the XSS canary callback software on your server I've created an installation script . This script first installs dependencies and then creates a system daemon to run the web server as a low privileged user. The email in the command is used by Let's Encrypt to notify you when your SSL certificate is nearing expiration, although auto-renewal is enabled by default. Piping curl to bash as root is commonly ill-advised so, please read the code before executing the following command.
+To easily install the XSS canary callback software on your server I've created an installation script . This script first installs dependencies and then creates a system daemon to run the web server as a low privileged user. The email in the command is used by Let's Encrypt to notify you when your SSL certificate is nearing expiration, although auto-renewal is enabled by default. Piping curl to bash as root is commonly ill-advised so, please read the code before executing the following command. The install script is a Gist you can find [HERE](https://gist.github.com/ACK-J/9acef3f7d188de49d6ff7304328e168a).
    ```bash
-   bash <(curl -s https://xsscanary.com/install) example.com your@email.com
+   bash <(curl -s https://gist.githubusercontent.com/ACK-J/9acef3f7d188de49d6ff7304328e168a/raw/284f0f41127c40ecb162904c7a31881b49521680/install_xss_canary_callback_server.sh) example.com your@email.com
    ```
 
 ### Development Mode
